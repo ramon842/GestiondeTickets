@@ -6,16 +6,22 @@
     <title>Crear Ticket 🚀 - Sistema de Gestión de Tickets de Grupo Almatodo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #1559e6;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-r from-indigo-500 to-purple-600 min-h-screen flex flex-col items-center justify-center text-white">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
     <!-- Encabezado -->
-    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-center items-center text-gray-900">
-        <h1 class="text-2xl font-bold text-center">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center text-gray-900">
+        <img src="logo_almatodo.png" alt="Grupo Almatodo" class="h-12">
+        <h1 class="text-2xl font-bold text-center flex-1 text-[var(--primary-color)]">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
     </header>
     
     <!-- Contenedor Principal -->
     <div class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-md mt-6 text-gray-900">
-        <h2 class="text-2xl font-bold mb-4 text-center">✍️ Crear Nuevo Ticket</h2>
+        <h2 class="text-2xl font-bold mb-4 text-center text-[var(--primary-color)]">✍️ Crear Nuevo Ticket</h2>
         
         <form id="ticket-form">
             <div class="mb-4">
@@ -48,7 +54,7 @@
                     <option value="Solicitudes Generales">❓ Solicitudes Generales</option>
                 </select>
             </div>
-            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">🚀 Crear Ticket</button>
+            <button type="submit" class="w-full bg-[var(--primary-color)] text-white py-2 rounded-md">🚀 Crear Ticket</button>
         </form>
     </div>
     
