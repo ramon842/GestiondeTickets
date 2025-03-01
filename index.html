@@ -3,45 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sistema de Tickets</title>
+    <title>Login / Registro 🚀 - Sistema de Tickets</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+<body class="bg-gradient-to-r from-indigo-500 to-purple-600 min-h-screen flex flex-col items-center justify-center text-white">
     <!-- Encabezado -->
-    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 class="text-xl font-bold">Sistema de Tickets</h1>
-        <nav>
-            <a href="#" class="text-blue-500">Inicio</a>
-        </nav>
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center text-gray-900">
+        <h1 class="text-xl font-bold">🎫 Sistema de Tickets</h1>
     </header>
     
-    <!-- Contenedor principal -->
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm mt-6">
-        <h2 class="text-2xl font-bold text-center">Iniciar Sesión</h2>
+    <!-- Contenedor Principal -->
+    <div class="container mx-auto p-6 max-w-md bg-white rounded-lg shadow-md mt-6 text-gray-900">
+        <h2 class="text-2xl font-bold mb-4 text-center">🔐 Iniciar Sesión / Registrarse</h2>
         
-        <form id="login-form" class="mt-4">
+        <form id="auth-form">
             <div class="mb-4">
-                <label class="block text-gray-700">Correo electrónico</label>
+                <label class="block font-semibold">📧 Correo Electrónico</label>
                 <input type="email" id="email" class="w-full p-2 border rounded-md" required>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700">Contraseña</label>
+                <label class="block font-semibold">🔑 Contraseña</label>
                 <input type="password" id="password" class="w-full p-2 border rounded-md" required>
             </div>
-            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">Entrar</button>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">➡️ Iniciar Sesión</button>
+            <button type="button" id="register" class="mt-2 w-full bg-green-500 text-white py-2 rounded-md">🆕 Registrarse</button>
         </form>
-        
-        <p class="text-center mt-4">¿No tienes cuenta? <a href="#" id="show-register" class="text-blue-500">Regístrate</a></p>
     </div>
     
-    <!-- Firebase y lógica de autenticación -->
+    <!-- Firebase y autenticación -->
     <script type="module">
-        // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
-        // Firebase Configuración
         const firebaseConfig = {
             apiKey: "AIzaSyCCnNmtLjRTQVcd1bLuz6NpBaTZ3u224q4",
             authDomain: "sistema-de-tickets-ga.firebaseapp.com",
@@ -51,21 +45,33 @@
             appId: "1:555737167715:web:d9c1c36b3c735e05cac556"
         };
         
-        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
-        
-        document.getElementById('login-form').addEventListener('submit', (e) => {
+
+        document.getElementById('auth-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
             signInWithEmailAndPassword(auth, email, password)
-                .then(userCredential => {
+                .then(() => {
                     window.location.href = "dashboard.html";
                 })
                 .catch(error => {
-                    alert("Error: " + error.message);
+                    alert("❌ Error: " + error.message);
+                });
+        });
+        
+        document.getElementById('register').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    alert("✅ Registro exitoso. Ahora puedes iniciar sesión");
+                })
+                .catch(error => {
+                    alert("❌ Error al registrarse: " + error.message);
                 });
         });
     </script>
