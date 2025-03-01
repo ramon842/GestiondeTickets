@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
-<header class="w-full bg-white shadow-md py-4 px-6 flex justify-center items-center text-gray-900">
-    <h1 class="text-2xl font-bold text-center">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
-</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil 🚀 - Sistema de Gestión de Tickets de Grupo Almatodo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+</head>
 <body class="bg-gray-100 min-h-screen">
     <!-- Encabezado -->
-    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 class="text-xl font-bold">Sistema de Tickets</h1>
-        <nav>
-            <a href="dashboard.html" class="text-blue-500 mx-2">Dashboard</a>
-            <a href="crear-ticket.html" class="text-blue-500 mx-2">Crear Ticket</a>
-            <a href="tickets.html" class="text-blue-500 mx-2">Mis Tickets</a>
-            <button id="logout" class="text-red-500">Cerrar Sesión</button>
-        </nav>
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-center items-center text-gray-900">
+        <h1 class="text-2xl font-bold text-center">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
     </header>
     
     <!-- Contenedor Principal -->
     <div class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-md mt-6">
-        <h2 class="text-2xl font-bold mb-4">Perfil de Usuario</h2>
+        <h2 class="text-2xl font-bold mb-4 text-center">👤 Perfil de Usuario</h2>
         
-        <div id="user-info" class="space-y-4">
-            <p><strong>Nombre:</strong> <span id="user-name"></span></p>
-            <p><strong>Email:</strong> <span id="user-email"></span></p>
+        <div id="user-info" class="space-y-4 text-center">
+            <p><strong>👤 Nombre:</strong> <span id="user-name"></span></p>
+            <p><strong>📧 Email:</strong> <span id="user-email"></span></p>
         </div>
         
-        <button id="logout-btn" class="mt-6 w-full bg-red-500 text-white py-2 rounded-md">Cerrar Sesión</button>
+        <button id="logout-btn" class="mt-6 w-full bg-red-500 text-white py-2 rounded-md">🚪 Cerrar Sesión</button>
     </div>
     
     <!-- Firebase y lógica de usuario -->
