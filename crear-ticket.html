@@ -3,58 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Ticket - Sistema de Tickets</title>
+    <title>Crear Ticket 🎫 - Sistema de Tickets</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gradient-to-r from-indigo-500 to-purple-600 min-h-screen flex flex-col items-center justify-center text-white">
     <!-- Encabezado -->
-    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 class="text-xl font-bold">Sistema de Tickets</h1>
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center text-gray-900">
+        <h1 class="text-xl font-bold">🎫 Sistema de Tickets</h1>
         <nav>
-            <a href="dashboard.html" class="text-blue-500 mx-2">Dashboard</a>
-            <a href="tickets.html" class="text-blue-500 mx-2">Mis Tickets</a>
-            <a href="perfil.html" class="text-blue-500 mx-2">Perfil</a>
-            <button id="logout" class="text-red-500">Cerrar Sesión</button>
+            <a href="dashboard.html" class="text-blue-500 mx-2">🏠 Dashboard</a>
+            <a href="tickets.html" class="text-blue-500 mx-2">📜 Mis Tickets</a>
+            <a href="perfil.html" class="text-blue-500 mx-2">👤 Perfil</a>
+            <button id="logout" class="text-red-500">🚪 Cerrar Sesión</button>
         </nav>
     </header>
     
     <!-- Contenedor Principal -->
-    <div class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-md mt-6">
-        <h2 class="text-2xl font-bold mb-4">Crear Nuevo Ticket</h2>
+    <div class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-md mt-6 text-gray-900">
+        <h2 class="text-2xl font-bold mb-4 text-center">✍️ Crear Nuevo Ticket</h2>
         
         <form id="ticket-form">
             <div class="mb-4">
-                <label class="block text-gray-700">Nombre del Cliente</label>
+                <label class="block font-semibold">👤 Nombre del Cliente</label>
                 <input type="text" id="nombreCliente" class="w-full p-2 border rounded-md" required>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700">Título</label>
+                <label class="block font-semibold">📌 Título</label>
                 <input type="text" id="titulo" class="w-full p-2 border rounded-md" required>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700">Descripción</label>
+                <label class="block font-semibold">📝 Descripción</label>
                 <textarea id="descripcion" class="w-full p-2 border rounded-md" required></textarea>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700">Prioridad</label>
+                <label class="block font-semibold">⚡ Prioridad</label>
                 <select id="prioridad" class="w-full p-2 border rounded-md">
-                    <option value="Baja">Baja</option>
-                    <option value="Media">Media</option>
-                    <option value="Alta">Alta</option>
+                    <option value="Baja">🟢 Baja</option>
+                    <option value="Media">🟡 Media</option>
+                    <option value="Alta">🔴 Alta</option>
                 </select>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700">Categoría</label>
+                <label class="block font-semibold">📂 Categoría</label>
                 <select id="categoria" class="w-full p-2 border rounded-md">
-                    <option value="Soporte Técnico">Soporte Técnico</option>
-                    <option value="Facturación y Pagos">Facturación y Pagos</option>
-                    <option value="Acceso y Seguridad">Acceso y Seguridad</option>
-                    <option value="Problemas de Servicio">Problemas de Servicio</option>
-                    <option value="Solicitudes Generales">Solicitudes Generales</option>
+                    <option value="Soporte Técnico">🖥️ Soporte Técnico</option>
+                    <option value="Facturación y Pagos">💰 Facturación y Pagos</option>
+                    <option value="Acceso y Seguridad">🔐 Acceso y Seguridad</option>
+                    <option value="Problemas de Servicio">⚠️ Problemas de Servicio</option>
+                    <option value="Solicitudes Generales">❓ Solicitudes Generales</option>
                 </select>
             </div>
-            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">Crear Ticket</button>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">🚀 Crear Ticket</button>
         </form>
     </div>
     
@@ -109,10 +109,10 @@
                     comentariosAdministrador: "",
                     validacionCliente: false
                 });
-                alert("Ticket creado exitosamente");
+                alert("✅ Ticket creado exitosamente");
                 window.location.href = "tickets.html";
             } catch (error) {
-                alert("Error al crear ticket: " + error.message);
+                alert("❌ Error al crear ticket: " + error.message);
             }
         });
         
