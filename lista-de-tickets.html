@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tickets 🚀 - Sistema de Gestión de Tickets de Grupo Almatodo</title>
+    <title>Detalle del Ticket 🚀 - Sistema de Gestión de Tickets de Grupo Almatodo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
     <style>
@@ -21,26 +21,24 @@
     
     <!-- Contenedor Principal -->
     <div class="container mx-auto p-6 bg-white rounded-lg shadow-md mt-6">
-        <h2 class="text-2xl font-bold mb-4 text-[var(--primary-color)]">📜 Mis Tickets</h2>
+        <h2 class="text-2xl font-bold mb-4 text-[var(--primary-color)]">🔍 Detalle del Ticket</h2>
+        <div id="ticket-info" class="space-y-4"></div>
         
-        <table class="w-full border-collapse border border-gray-300">
-            <thead>
-                <tr class="bg-[var(--primary-color)] text-white">
-                    <th class="border border-gray-300 p-2">📌 Título</th>
-                    <th class="border border-gray-300 p-2">⚡ Prioridad</th>
-                    <th class="border border-gray-300 p-2">📂 Estado</th>
-                    <th class="border border-gray-300 p-2">🕒 Fecha</th>
-                    <th class="border border-gray-300 p-2">🔍 Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="tickets-list"></tbody>
-        </table>
+        <div class="mt-6">
+            <label class="block text-gray-700">🔄 Actualizar Estado</label>
+            <select id="estado" class="w-full p-2 border rounded-md">
+                <option value="Abierto">🟢 Abierto</option>
+                <option value="En Proceso">🟡 En Proceso</option>
+                <option value="Cerrado">🔴 Cerrado</option>
+            </select>
+            <button id="actualizar" class="mt-4 w-full bg-[var(--primary-color)] text-white py-2 rounded-md">💾 Guardar Cambios</button>
+        </div>
     </div>
     
-    <!-- Firebase y lógica de carga de tickets -->
+    <!-- Firebase y lógica de actualización -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
         import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -56,28 +54,40 @@
         const db = getFirestore();
         const auth = getAuth();
 
-        async function cargarTickets() {
-            const ticketsRef = collection(db, "tickets");
-            const snapshot = await getDocs(ticketsRef);
-            const ticketsList = document.getElementById("tickets-list");
+        async function cargarTicket() {
+            const params = new URLSearchParams(window.location.search);
+            const ticketId = params.get("id");
+            if (!ticketId) return;
             
-            ticketsList.innerHTML = "";
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const row = `<tr>
-                    <td class="border border-gray-300 p-2">${data.titulo}</td>
-                    <td class="border border-gray-300 p-2">${data.prioridad}</td>
-                    <td class="border border-gray-300 p-2">${data.estado}</td>
-                    <td class="border border-gray-300 p-2">${new Date(data.fechaRegistro).toLocaleDateString()}</td>
-                    <td class="border border-gray-300 p-2 text-center">
-                        <a href="ticket-detalle.html?id=${doc.id}" class="text-[var(--primary-color)] font-bold">🔍 Ver</a>
-                    </td>
-                </tr>`;
-                ticketsList.innerHTML += row;
-            });
+            const ticketRef = doc(db, "tickets", ticketId);
+            const snapshot = await getDoc(ticketRef);
+            if (snapshot.exists()) {
+                const data = snapshot.data();
+                document.getElementById("ticket-info").innerHTML = `
+                    <p><strong>📌 Título:</strong> ${data.titulo}</p>
+                    <p><strong>📝 Descripción:</strong> ${data.descripcion}</p>
+                    <p><strong>⚡ Prioridad:</strong> ${data.prioridad}</p>
+                    <p><strong>📂 Estado:</strong> ${data.estado}</p>
+                    <p><strong>🕒 Fecha:</strong> ${new Date(data.fechaRegistro).toLocaleDateString()}</p>
+                `;
+                document.getElementById("estado").value = data.estado;
+            }
         }
 
-        cargarTickets();
+        document.getElementById("actualizar").addEventListener("click", async () => {
+            const params = new URLSearchParams(window.location.search);
+            const ticketId = params.get("id");
+            const nuevoEstado = document.getElementById("estado").value;
+            
+            if (!ticketId) return;
+            
+            const ticketRef = doc(db, "tickets", ticketId);
+            await updateDoc(ticketRef, { estado: nuevoEstado });
+            alert("✅ Estado actualizado");
+            window.location.reload();
+        });
+
+        cargarTicket();
         
         document.getElementById("logout").addEventListener("click", () => {
             signOut(auth).then(() => {
