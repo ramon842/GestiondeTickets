@@ -28,6 +28,7 @@
             </div>
             <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">➡️ Iniciar Sesión</button>
             <button type="button" id="register" class="mt-2 w-full bg-green-500 text-white py-2 rounded-md">🆕 Registrarse</button>
+            <p id="error-message" class="text-red-500 text-center mt-2"></p>
         </form>
     </div>
     
@@ -48,30 +49,51 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
 
+        function validarEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
         document.getElementById('auth-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById("error-message");
+            
+            if (!validarEmail(email)) {
+                errorMessage.textContent = "❌ Introduce un correo electrónico válido";
+                return;
+            }
             
             signInWithEmailAndPassword(auth, email, password)
                 .then(() => {
                     window.location.href = "dashboard.html";
                 })
                 .catch(error => {
-                    alert("❌ Error: " + error.message);
+                    errorMessage.textContent = "❌ Error: " + error.message;
                 });
         });
         
         document.getElementById('register').addEventListener('click', () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById("error-message");
+            
+            if (!validarEmail(email)) {
+                errorMessage.textContent = "❌ Introduce un correo electrónico válido";
+                return;
+            }
+            if (password.length < 6) {
+                errorMessage.textContent = "❌ La contraseña debe tener al menos 6 caracteres";
+                return;
+            }
             
             createUserWithEmailAndPassword(auth, email, password)
                 .then(() => {
                     alert("✅ Registro exitoso. Ahora puedes iniciar sesión");
                 })
                 .catch(error => {
-                    alert("❌ Error al registrarse: " + error.message);
+                    errorMessage.textContent = "❌ Error al registrarse: " + error.message;
                 });
         });
     </script>
