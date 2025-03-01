@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
-<header class="w-full bg-white shadow-md py-4 px-6 flex justify-center items-center text-gray-900">
-    <h1 class="text-2xl font-bold text-center">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
-</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Ticket 🚀 - Sistema de Gestión de Tickets de Grupo Almatodo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+</head>
 <body class="bg-gray-100 min-h-screen">
     <!-- Encabezado -->
-    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 class="text-xl font-bold">Sistema de Tickets</h1>
-        <nav>
-            <a href="dashboard.html" class="text-blue-500 mx-2">Dashboard</a>
-            <a href="crear-ticket.html" class="text-blue-500 mx-2">Crear Ticket</a>
-            <a href="tickets.html" class="text-blue-500 mx-2">Mis Tickets</a>
-            <a href="perfil.html" class="text-blue-500 mx-2">Perfil</a>
-            <button id="logout" class="text-red-500">Cerrar Sesión</button>
-        </nav>
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-center items-center text-gray-900">
+        <h1 class="text-2xl font-bold text-center">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
     </header>
     
     <!-- Contenedor Principal -->
     <div class="container mx-auto p-6 bg-white rounded-lg shadow-md mt-6">
-        <h2 class="text-2xl font-bold mb-4">Detalle del Ticket</h2>
+        <h2 class="text-2xl font-bold mb-4">🔍 Detalle del Ticket</h2>
         <div id="ticket-info" class="space-y-4"></div>
         
         <div class="mt-6">
-            <label class="block text-gray-700">Actualizar Estado</label>
+            <label class="block text-gray-700">🔄 Actualizar Estado</label>
             <select id="estado" class="w-full p-2 border rounded-md">
-                <option value="Abierto">Abierto</option>
-                <option value="En Proceso">En Proceso</option>
-                <option value="Cerrado">Cerrado</option>
+                <option value="Abierto">🟢 Abierto</option>
+                <option value="En Proceso">🟡 En Proceso</option>
+                <option value="Cerrado">🔴 Cerrado</option>
             </select>
-            <button id="actualizar" class="mt-4 w-full bg-blue-500 text-white py-2 rounded-md">Actualizar Ticket</button>
+            <button id="actualizar" class="mt-4 w-full bg-blue-500 text-white py-2 rounded-md">💾 Guardar Cambios</button>
         </div>
     </div>
     
@@ -61,11 +58,11 @@
             if (snapshot.exists()) {
                 const data = snapshot.data();
                 document.getElementById("ticket-info").innerHTML = `
-                    <p><strong>Título:</strong> ${data.titulo}</p>
-                    <p><strong>Descripción:</strong> ${data.descripcion}</p>
-                    <p><strong>Prioridad:</strong> ${data.prioridad}</p>
-                    <p><strong>Estado:</strong> ${data.estado}</p>
-                    <p><strong>Fecha:</strong> ${new Date(data.fecha).toLocaleDateString()}</p>
+                    <p><strong>📌 Título:</strong> ${data.titulo}</p>
+                    <p><strong>📝 Descripción:</strong> ${data.descripcion}</p>
+                    <p><strong>⚡ Prioridad:</strong> ${data.prioridad}</p>
+                    <p><strong>📂 Estado:</strong> ${data.estado}</p>
+                    <p><strong>🕒 Fecha:</strong> ${new Date(data.fechaRegistro).toLocaleDateString()}</p>
                 `;
                 document.getElementById("estado").value = data.estado;
             }
@@ -80,7 +77,7 @@
             
             const ticketRef = doc(db, "tickets", ticketId);
             await updateDoc(ticketRef, { estado: nuevoEstado });
-            alert("Estado actualizado");
+            alert("✅ Estado actualizado");
             window.location.reload();
         });
 
