@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Ticket - Sistema de Tickets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Encabezado -->
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Sistema de Tickets</h1>
+        <nav>
+            <a href="dashboard.html" class="text-blue-500 mx-2">Dashboard</a>
+            <a href="tickets.html" class="text-blue-500 mx-2">Mis Tickets</a>
+            <a href="perfil.html" class="text-blue-500 mx-2">Perfil</a>
+            <button id="logout" class="text-red-500">Cerrar Sesión</button>
+        </nav>
+    </header>
+    
+    <!-- Contenedor Principal -->
+    <div class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-md mt-6">
+        <h2 class="text-2xl font-bold mb-4">Crear Nuevo Ticket</h2>
+        
+        <form id="ticket-form">
+            <div class="mb-4">
+                <label class="block text-gray-700">Nombre del Cliente</label>
+                <input type="text" id="nombreCliente" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Título</label>
+                <input type="text" id="titulo" class="w-full p-2 border rounded-md" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Descripción</label>
+                <textarea id="descripcion" class="w-full p-2 border rounded-md" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Prioridad</label>
+                <select id="prioridad" class="w-full p-2 border rounded-md">
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Categoría</label>
+                <select id="categoria" class="w-full p-2 border rounded-md">
+                    <option value="Soporte Técnico">Soporte Técnico</option>
+                    <option value="Facturación y Pagos">Facturación y Pagos</option>
+                    <option value="Acceso y Seguridad">Acceso y Seguridad</option>
+                    <option value="Problemas de Servicio">Problemas de Servicio</option>
+                    <option value="Solicitudes Generales">Solicitudes Generales</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md">Crear Ticket</button>
+        </form>
+    </div>
+    
+    <!-- Firebase y lógica de creación de ticket -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCnNmtLjRTQVcd1bLuz6NpBaTZ3u224q4",
+            authDomain: "sistema-de-tickets-ga.firebaseapp.com",
+            projectId: "sistema-de-tickets-ga",
+            storageBucket: "sistema-de-tickets-ga.firebasestorage.app",
+            messagingSenderId: "555737167715",
+            appId: "1:555737167715:web:d9c1c36b3c735e05cac556"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+        const auth = getAuth();
+
+        async function obtenerConsecutivo() {
+            const ticketsRef = collection(db, "tickets");
+            const snapshot = await getDocs(ticketsRef);
+            return snapshot.size + 1;
+        }
+
+        document.getElementById('ticket-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nombreCliente = document.getElementById('nombreCliente').value;
+            const titulo = document.getElementById('titulo').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const prioridad = document.getElementById('prioridad').value;
+            const categoria = document.getElementById('categoria').value;
+            const fecha = new Date();
+            const idConsecutivo = await obtenerConsecutivo();
+            
+            try {
+                await addDoc(collection(db, "tickets"), {
+                    idConsecutivo,
+                    fechaRegistro: fecha.toISOString(),
+                    horaTicket: fecha.toLocaleTimeString(),
+                    nombreCliente,
+                    titulo,
+                    descripcion,
+                    prioridad,
+                    agenteAsignado: "Sin asignar",
+                    estado: "Abierto",
+                    categoria,
+                    tiempoEstimadoRespuesta: "Pendiente",
+                    comentariosAdministrador: "",
+                    validacionCliente: false
+                });
+                alert("Ticket creado exitosamente");
+                window.location.href = "tickets.html";
+            } catch (error) {
+                alert("Error al crear ticket: " + error.message);
+            }
+        });
+        
+        document.getElementById("logout").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        });
+    </script>
+</body>
+</html>

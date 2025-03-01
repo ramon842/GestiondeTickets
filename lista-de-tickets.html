@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tickets - Sistema de Tickets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Encabezado -->
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Sistema de Tickets</h1>
+        <nav>
+            <a href="dashboard.html" class="text-blue-500 mx-2">Dashboard</a>
+            <a href="crear-ticket.html" class="text-blue-500 mx-2">Crear Ticket</a>
+            <a href="perfil.html" class="text-blue-500 mx-2">Perfil</a>
+            <button id="logout" class="text-red-500">Cerrar Sesión</button>
+        </nav>
+    </header>
+    
+    <!-- Contenedor Principal -->
+    <div class="container mx-auto p-6 bg-white rounded-lg shadow-md mt-6">
+        <h2 class="text-2xl font-bold mb-4">Mis Tickets</h2>
+        
+        <table class="w-full border-collapse border border-gray-300">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="border border-gray-300 p-2">Título</th>
+                    <th class="border border-gray-300 p-2">Prioridad</th>
+                    <th class="border border-gray-300 p-2">Estado</th>
+                    <th class="border border-gray-300 p-2">Fecha</th>
+                    <th class="border border-gray-300 p-2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tickets-list"></tbody>
+        </table>
+    </div>
+    
+    <!-- Firebase y lógica de carga de tickets -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCnNmtLjRTQVcd1bLuz6NpBaTZ3u224q4",
+            authDomain: "sistema-de-tickets-ga.firebaseapp.com",
+            projectId: "sistema-de-tickets-ga",
+            storageBucket: "sistema-de-tickets-ga.firebasestorage.app",
+            messagingSenderId: "555737167715",
+            appId: "1:555737167715:web:d9c1c36b3c735e05cac556"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+        const auth = getAuth();
+
+        async function cargarTickets() {
+            const ticketsRef = collection(db, "tickets");
+            const snapshot = await getDocs(ticketsRef);
+            const ticketsList = document.getElementById("tickets-list");
+            
+            ticketsList.innerHTML = "";
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const row = `<tr>
+                    <td class="border border-gray-300 p-2">${data.titulo}</td>
+                    <td class="border border-gray-300 p-2">${data.prioridad}</td>
+                    <td class="border border-gray-300 p-2">${data.estado}</td>
+                    <td class="border border-gray-300 p-2">${new Date(data.fecha).toLocaleDateString()}</td>
+                    <td class="border border-gray-300 p-2 text-center">
+                        <a href="ticket-detalle.html?id=${doc.id}" class="text-blue-500">Ver</a>
+                    </td>
+                </tr>`;
+                ticketsList.innerHTML += row;
+            });
+        }
+
+        cargarTickets();
+        
+        document.getElementById("logout").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        });
+    </script>
+</body>
+</html>
