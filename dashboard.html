@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
-<header class="w-full bg-white shadow-md py-4 px-6 flex justify-center items-center text-gray-900">
-    <h1 class="text-2xl font-bold text-center">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
-</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard 🚀 - Sistema de Gestión de Tickets de Grupo Almatodo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/YOUR_FONT_AWESOME_KIT.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 <body class="bg-gray-100 min-h-screen">
     <!-- Encabezado -->
-    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <h1 class="text-xl font-bold">Sistema de Tickets</h1>
-        <nav>
-            <a href="crear-ticket.html" class="text-blue-500 mx-2">Crear Ticket</a>
-            <a href="tickets.html" class="text-blue-500 mx-2">Mis Tickets</a>
-            <a href="perfil.html" class="text-blue-500 mx-2">Perfil</a>
-            <button id="logout" class="text-red-500">Cerrar Sesión</button>
-        </nav>
+    <header class="w-full bg-white shadow-md py-4 px-6 flex justify-center items-center text-gray-900">
+        <h1 class="text-2xl font-bold text-center">🎫 Sistema de Gestión de Tickets de Grupo Almatodo</h1>
     </header>
     
     <!-- Contenedor Principal -->
     <div class="container mx-auto p-6">
-        <h2 class="text-2xl font-bold mb-4">Resumen de Tickets</h2>
+        <h2 class="text-2xl font-bold mb-4">📊 Resumen de Tickets</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <h3 class="text-xl font-semibold">Tickets Abiertos</h3>
+                <h3 class="text-xl font-semibold">📂 Tickets Abiertos</h3>
                 <p id="tickets-abiertos" class="text-3xl font-bold text-blue-500">0</p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <h3 class="text-xl font-semibold">Tickets En Proceso</h3>
+                <h3 class="text-xl font-semibold">⏳ Tickets En Proceso</h3>
                 <p id="tickets-proceso" class="text-3xl font-bold text-yellow-500">0</p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                <h3 class="text-xl font-semibold">Tickets Cerrados</h3>
+                <h3 class="text-xl font-semibold">✅ Tickets Cerrados</h3>
                 <p id="tickets-cerrados" class="text-3xl font-bold text-green-500">0</p>
             </div>
         </div>
         
         <!-- Gráfico -->
         <div class="bg-white p-6 rounded-lg shadow-md mt-6">
-            <h3 class="text-xl font-semibold text-center">Estado de Tickets</h3>
+            <h3 class="text-xl font-semibold text-center">📊 Estado de Tickets</h3>
             <canvas id="ticketsChart" class="mt-4"></canvas>
         </div>
     </div>
